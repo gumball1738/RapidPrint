@@ -1,0 +1,227 @@
+        .navigation ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navigation li {
+            float: left;
+        }
+
+        .navigation li a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navigation li a:hover:not(.active) {
+            color: #8B0000;
+        }
+
+        .navigation li img {
+            height: 60px;
+            vertical-align: middle;
+        }
+
+        .navigation .search-container {
+            margin-left: auto; /* Push the search container to the right */
+            display: flex;
+            align-items: center;
+        }
+
+        .navigation .search-container input[type="text"] {
+            padding: 6px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+        }
+
+        .navigation .search-container button {
+            padding: 6px 10px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .navigation .search-container button:hover {
+            background: #ccc;
+        }
+
+        @media screen and (max-width: 600px) {
+            .navigation {
+                flex-wrap: wrap; /* Allow wrapping on small screens */
+            }
+
+            .navigation .search-container {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navigation .search-container input[type="text"],
+            .navigation .search-container button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+		
+		.mycontainer {
+			display: flex;
+		}
+		.mycontainer > div {
+			width:33%;
+		}
+		
+		.background{
+			background-color: #8B0000;
+			text-align: center;
+		}
+		
+
+	.payment-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .payment-methods {
+            flex: 1;
+            max-width: 600px;
+        }
+
+        .payment-methods label {
+            margin-right: 15px;
+            font-size: 14px;
+        }
+
+        .membership-id {
+            margin-top: 15px;
+        }
+
+        .membership-id label {
+            display: inline-block;
+            margin-right: 10px;
+            font-size: 14px;
+        }
+
+        .membership-id input[type="text"] {
+            padding: 8px;
+            width: 300px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .payment-summary {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: flex-end;
+            width: 200px;
+            border: 1px solid #ccc;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .payment-summary .total {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .payment-summary button {
+            padding: 10px 20px;
+            background-color: #8B0000;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .payment-summary button:hover {
+            background-color: #a00000;
+        }
+		
+		  .dashboard-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            gap: 20px;
+        }
+
+        /* Chart Section */
+        .sales-chart {
+            text-align: center;
+            flex: 1;
+        }
+
+        .sales-chart img {
+            width: 150px;
+            height: 150px;
+        }
+
+        /* Sales Info Section */
+        .sales-info {
+            flex: 2;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sales-info p {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .sales-info button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .sales-info button:hover {
+            background-color: #a00000;
+        }
+
+        /* User Section */
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .user-info button {
+            padding: 8px 16px;
+            background-color: #8B0000;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .user-info button:hover {
+            background-color: #a00000;
+        }
