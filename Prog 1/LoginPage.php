@@ -25,14 +25,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Validate input
     if (!empty($inputUsername) && !empty($inputPassword) && !empty($selectedRole)) {
         // Query to check user credentials
-		  $sql = "
-			SELECT 'customer' AS role, username, password FROM customer WHERE username = ? AND password = ?
-			UNION
-			SELECT 'staff' AS role, username, password FROM staff WHERE username = ? AND password = ?
-			UNION
-			SELECT 'administrator' AS role, username, password FROM administrator WHERE username = ? AND password = ?
-		";
-				
+          $sql = "
+            SELECT 'customer' AS role, username, password FROM customer WHERE username = ? AND password = ?
+            UNION
+            SELECT 'staff' AS role, username, password FROM staff WHERE username = ? AND password = ?
+            UNION
+            SELECT 'administrator' AS role, username, password FROM administrator WHERE username = ? AND password = ?
+        ";
+                
         $stmt = $conn->prepare($sql);
          $stmt->bind_param(
             "ssssss",
@@ -81,10 +81,10 @@ $conn->close();
     <style>
         body {
             font-family: Arial, sans-serif;
-			background-image: url('images/umpsa.jpg');
-			background-repeat: no-repeat;
-			background-attachment: fixed;
-			background-size: cover;
+            background-image: url('images/umpsa.jpg');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -141,9 +141,9 @@ $conn->close();
             color: white;
             width: 100%;
         }
-		.copyright{
-		font-size: 70%;
-		}
+        .copyright{
+        font-size: 70%;
+        }
 
     </style>
 </head>
@@ -155,7 +155,7 @@ $conn->close();
             <input type="text" id="username" name="username">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password">
-			<label for="role">Role:</label>
+            <label for="role">Role:</label>
             <select id="role" name="role" required>
                 <option value="" disabled selected>Select your role</option>
                 <option value="customer">Customer</option>
@@ -163,9 +163,10 @@ $conn->close();
                 <option value="administrator">Administrator</option>
             </select>
             <button type="submit" class="submit-btn">Submit</button>
-            <button onclick="document.location='SignUpPage.php'"type="button" class="signup-btn">Sign Up</button>
             <button onclick="document.location='ResetPassPage.php'" type="button" class="reset-password-btn">Forget Password?</button>
         </form>
+        <br>
+        <a href="SignUpPage.php">New Students? Register here!</a>
         <br>
         <footer class="copyright">
             <p> © 2024 RapidPrint. All rights reserved.</p>
