@@ -3,10 +3,10 @@
 session_start();
 
 // Database connection
-$servername = "localhost"; // Replace with your server name
-$username = "root";        // Replace with your database username
-$password = "";            // Replace with your database password
-$dbname = "rapidprintdb"; // Replace with your database name
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "rapidprintdb";
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -24,29 +24,34 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validate input
     if (!empty($inputUsername) && !empty($inputPassword) && !empty($selectedRole)) {
-        // Query to check user credentials
-          $sql = "
-            SELECT 'customer' AS role, username, password FROM customer WHERE username = ? AND password = ?
-            UNION
-            SELECT 'staff' AS role, username, password FROM staff WHERE username = ? AND password = ?
-            UNION
-            SELECT 'administrator' AS role, username, password FROM administrator WHERE username = ? AND password = ?
-        ";
-                
+        // Role-specific query
+        $table = '';
+        switch ($selectedRole) {
+            case 'customer':
+                $table = 'customer';
+                break;
+            case 'staff':
+                $table = 'staff';
+                break;
+            case 'administrator':
+                $table = 'administrator';
+                break;
+            default:
+                echo "<p style='color: red;'>Invalid role selected.</p>";
+                exit();
+        }
+
+        // Query to check user credentials in the specific role table
+        $sql = "SELECT username, password FROM $table WHERE username = ? AND password = ?";
         $stmt = $conn->prepare($sql);
-         $stmt->bind_param(
-            "ssssss",
-            $inputUsername, $inputPassword,
-            $inputUsername, $inputPassword,
-            $inputUsername, $inputPassword
-        );
+        $stmt->bind_param("ss", $inputUsername, $inputPassword);
         $stmt->execute();
         $result = $stmt->get_result();
 
-         if ($result->num_rows == 1) {
-            $user = $result->fetch_assoc();
+        if ($result->num_rows == 1) {
+            // Valid credentials
             $_SESSION["session_id"] = session_id();
-            $_SESSION["session_name"] = $user["username"];
+            $_SESSION["session_name"] = $inputUsername;
             $_SESSION["session_role"] = $selectedRole;
 
             // Redirect based on role
@@ -58,21 +63,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: MainPage4.php");
             }
             exit();
-
         } else {
             // Invalid credentials
-            echo "<p style='color: red;'>Invalid username and password</p>";
+            echo "<p style='color: red;'>Invalid username or password.</p>";
         }
 
         $stmt->close();
     } else {
-        echo "<p style='color: red;'>Both fields are required</p>";
+        echo "<p style='color: red;'>All fields are required.</p>";
     }
-
 }
 
 $conn->close();
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
