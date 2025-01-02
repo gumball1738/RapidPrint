@@ -3,10 +3,10 @@
 session_start();
 
 // Database connection
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "rapidprintdb";
+$servername = "localhost"; // Replace with your server name
+$username = "root";        // Replace with your database username
+$password = "";            // Replace with your database password
+$dbname = "mydb"; // Replace with your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -20,64 +20,43 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inputUsername = $_POST["username"];
     $inputPassword = $_POST["password"];
-    $selectedRole = $_POST["role"];
 
     // Validate input
-    if (!empty($inputUsername) && !empty($inputPassword) && !empty($selectedRole)) {
-        // Role-specific query
-        $table = '';
-        switch ($selectedRole) {
-            case 'customer':
-                $table = 'customer';
-                break;
-            case 'staff':
-                $table = 'staff';
-                break;
-            case 'administrator':
-                $table = 'administrator';
-                break;
-            default:
-                echo "<p style='color: red;'>Invalid role selected.</p>";
-                exit();
-        }
-
-        // Query to check user credentials in the specific role table
-        $sql = "SELECT username, password FROM $table WHERE username = ? AND password = ?";
+    if (!empty($inputUsername) && !empty($inputPassword)) {
+        // Query to check user credentials
+        $sql = "SELECT * FROM user_login WHERE user_name = ? AND password = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $inputUsername, $inputPassword);
         $stmt->execute();
         $result = $stmt->get_result();
 
         if ($result->num_rows == 1) {
-            // Valid credentials
+            // User exists, start session
+            $user = $result->fetch_assoc();
             $_SESSION["session_id"] = session_id();
-            $_SESSION["session_name"] = $inputUsername;
-            $_SESSION["session_role"] = $selectedRole;
+            $_SESSION["session_name"] = $user["user_name"];
 
-            // Redirect based on role
-            if ($selectedRole === "customer") {
-                header("Location: MainPage2.php");
-            } elseif ($selectedRole === "administrator") {
-                header("Location: MainPage3.php");
-            } elseif ($selectedRole === "staff") {
-                header("Location: MainPage4.php");
-            }
+            // Redirect to a welcome page or dashboard
+            echo "Login successful! Welcome " . $_SESSION["session_name"];
+
+            // Redirect to welcome page
+            header("Location: ManageKoperasiPage.php");
             exit();
+
         } else {
             // Invalid credentials
-            echo "<p style='color: red;'>Invalid username or password.</p>";
+            echo "<p style='color: red;'>Invalid username and password</p>";
         }
 
         $stmt->close();
     } else {
-        echo "<p style='color: red;'>All fields are required.</p>";
+        echo "<p style='color: red;'>Both fields are required</p>";
     }
+
 }
 
 $conn->close();
 ?>
-
-
 
 <!DOCTYPE html>
 <html>
@@ -88,7 +67,7 @@ $conn->close();
             font-family: Arial, sans-serif;
             background-image: url('images/umpsa.jpg');
             background-repeat: no-repeat;
-            background-attachment: fixed;
+            background-attachment: fixed;  
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -105,6 +84,7 @@ $conn->close();
             width: 300px;
         }
         .container h1 {
+             font-family: 'Orbitron', sans-serif;
             font-size: 24px;
             margin-bottom: 20px;
         }
@@ -147,31 +127,24 @@ $conn->close();
             width: 100%;
         }
         .copyright{
-        font-size: 70%;
+            font-size: 70%;
         }
-
+    
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 align="justify"><img src="images/Logo.jpg" alt="RapidPrint Logo" width="100">          RapidPrint</h1>
+        <h1 align="justify"><img src="images/LogoRP.jpg" alt="RapidPrint Logo" width="100">          RapidPrint</h1>
         <form method="post" action="LoginPage.php">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password">
-            <label for="role">Role:</label>
-            <select id="role" name="role" required>
-                <option value="" disabled selected>Select your role</option>
-                <option value="customer">Customer</option>
-                <option value="staff">Staff</option>
-                <option value="administrator">Administrator</option>
-            </select>
             <button type="submit" class="submit-btn">Submit</button>
-            <button onclick="document.location='ResetPassPage.php'" type="button" class="reset-password-btn">Forget Password?</button>
+            <button onclick="document.location='SignUpPage.php'" type="button" class="signup-btn">Sign Up</button>
+            <button type="reset" class="reset-btn">Reset</button>
+            <button onclick="document.location='ResetPassPage.php'" type="button" class="reset-password-btn">Forgot Password?</button>
         </form>
-        <br>
-        <a href="SignUpPage.php">New Students? Register here!</a>
         <br>
         <footer class="copyright">
             <p> © 2024 RapidPrint. All rights reserved.</p>
