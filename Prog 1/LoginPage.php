@@ -6,7 +6,7 @@ session_start();
 $servername = "localhost"; // Replace with your server name
 $username = "root";        // Replace with your database username
 $password = "";            // Replace with your database password
-$dbname = "mydb"; // Replace with your database name
+$dbname = "rapidprintdb";   // Replace with your database name
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
@@ -20,29 +20,63 @@ if ($conn->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $inputUsername = $_POST["username"];
     $inputPassword = $_POST["password"];
+    $selectedRole = $_POST["role"];
 
     // Validate input
-    if (!empty($inputUsername) && !empty($inputPassword)) {
-        // Query to check user credentials
-        $sql = "SELECT * FROM user_login WHERE user_name = ? AND password = ?";
+    if (!empty($inputUsername) && !empty($inputPassword) && !empty($selectedRole)) {
+        // Role-specific query
+        $table = '';
+        switch ($selectedRole) {
+            case 'customer':
+                $table = 'customer';
+                break;
+            case 'staff':
+                $table = 'staff';
+                break;
+            case 'administrator':
+                $table = 'administrator';
+                break;
+            default:
+                echo "<p style='color: red;'>Invalid role selected.</p>";
+                exit();
+        }
+
+        // Query to check user credentials in the specific role table
+        $sql = "SELECT username, password FROM $table WHERE username = ? AND password = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("ss", $inputUsername, $inputPassword);
         $stmt->execute();
         $result = $stmt->get_result();
 
+        // Check if a user was found
         if ($result->num_rows == 1) {
-            // User exists, start session
             $user = $result->fetch_assoc();
             $_SESSION["session_id"] = session_id();
-            $_SESSION["session_name"] = $user["user_name"];
+            $_SESSION["session_name"] = $user["username"];
+            $_SESSION["session_role"] = $selectedRole;
 
-            // Redirect to a welcome page or dashboard
-            echo "Login successful! Welcome " . $_SESSION["session_name"];
+            // Store CustomerID only for customers
+            if ($selectedRole === "customer") {
+                $sqlCustomer = "SELECT CustomerID FROM customer WHERE username = ?";
+                $stmtCustomer = $conn->prepare($sqlCustomer);
+                $stmtCustomer->bind_param("s", $inputUsername);
+                $stmtCustomer->execute();
+                $resultCustomer = $stmtCustomer->get_result();
+                if ($resultCustomer->num_rows > 0) {
+                    $userCustomer = $resultCustomer->fetch_assoc();
+                    $_SESSION["CustomerID"] = $userCustomer["CustomerID"];
+                }
+            }
 
-            // Redirect to welcome page
-            header("Location: ManageKoperasiPage.php");
+            // Redirect based on role
+            if ($selectedRole === "customer") {
+                header("Location: MainPage2.php");
+            } elseif ($selectedRole === "administrator") {
+                header("Location: MainPage3.php");
+            } elseif ($selectedRole === "staff") {
+                header("Location: MainPage4.php");
+            }
             exit();
-
         } else {
             // Invalid credentials
             echo "<p style='color: red;'>Invalid username and password</p>";
@@ -52,11 +86,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         echo "<p style='color: red;'>Both fields are required</p>";
     }
-
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html>
