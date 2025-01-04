@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extract Student ID</title>
+    <script>
+        function extractID() {
+            // Get the input value
+            const studentID = document.getElementById("studentID").value;
+            // Extract the first two characters
+            const prefix = studentID.slice(0, 2);
+            // Display the result
+            document.getElementById("result").innerHTML = `Your ID starts with <b>${prefix}</b>`;
+        }
+    </script>
+</head>
+<body>
+    <h2>Question 2</h2>
+    <p>ID: <input type="text" id="studentID" /> <button onclick="extractID()">Click</button></p>
+    <p id="result"></p>
+</body>
+</html>

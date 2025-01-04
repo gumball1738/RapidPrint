@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab Sheet 5 Q1</title>
+</head>
+<body>
+
+<h3>Create a page to insert user name and age as in Figure 1. Use the age input value type as
+number.</h3>
+
+<form>
+	<div>Name: <input type="text" id="name"></div>
+	<br>
+	<div>Age: <t><input type="number" id="numb"></div>
+	<br>
+	<div>Email: <input type="email" id="email"></div>
+	<br>
+	     <input type = "button" value = "CLICK!" 
+			onclick = "display()">
+</form>
+<br>
+
+
+<script>
+function display (){
+	let uname = document.getElementById("name").value;
+	let uage = document.getElementById("numb").value;
+	let uemail = document.getElementById("email").value;
+	
+	                        
+            document.getElementById("demo").innerHTML = 
+			("<hr>" + "<br>" + "Welcome " + uname + "<br>"+ 
+			"<Your are>"+ uage + "years old" + "<br>" + "You email is" + uemail );
+	}
+</script>
+   <p id="demo"></p>
+</body>
+</html>

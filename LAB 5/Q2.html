@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Extract Student ID</title>
+   
+</head>
+<body>
+    <h2>Question 2</h2>
+    <label>ID:</label> <input type="text" id="studentID" /> 
+	<button onclick="extractID()">Click</button></p>
+    <p id="demo"></p>
+</body>
+ <script>
+        function extractID() {
+            let studentID = document.getElementById("studentID").value;
+           let result = studentID.slice(0, 2);
+            document.getElementById("demo").innerHTML = 
+			("Your Program Code "+ "<b>" +result +"</b>");
+        }
+    </script>
+</html>

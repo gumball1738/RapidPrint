@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculate Summation</title>
+   
+</head>
+<body>
+    <h2>Question 4</h2>
+		<lable>Name:</lable> <input type="text" id="name" /> 
+        <lable>Age:</lable> <input type="number" id="age" />
+        <button onclick="Sum()">Submit</button>
+    <p id="demo"></p>
+</body>
+ <script>
+        function Sum() {
+			let uname = document.getElementById("name").value;
+            let uage = document.getElementById("age").value;
+			
+			let currentYear = new Date().getFullYear();
+            let birthYear = currentYear - uage;
+           document.getElementById("demo").innerHTML = 
+			("<hr>" + "<br>" + "Welcome " + uname + "<br>"+ 
+			"Your are born in "+ birthYear );
+        }
+    </script>
+</html>
