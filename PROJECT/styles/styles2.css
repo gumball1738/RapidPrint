@@ -1,0 +1,125 @@
+	  
+	   .navigation ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        .navigation li {
+            float: left;
+        }
+		
+
+        .navigation li a {
+            display: block;
+            color: black;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        .navigation li a:hover:not(.active) {
+            color: #8B0000;
+        }
+
+        .navigation li img {
+            height: 60px;
+            vertical-align: middle;
+        }
+
+        .navigation .search-container {
+            margin-left: auto; /* Push the search container to the right */
+            display: flex;
+            align-items: center;
+        }
+
+        .navigation .search-container input[type="text"] {
+            padding: 6px;
+            font-size: 17px;
+            border: 1px solid #ccc;
+        }
+
+        .navigation .search-container button {
+            padding: 6px 10px;
+            background: #ddd;
+            font-size: 17px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .navigation .search-container button:hover {
+            background: #ccc;
+        }
+
+        @media screen and (max-width: 600px) {
+            .navigation {
+                flex-wrap: wrap; /* Allow wrapping on small screens */
+            }
+
+            .navigation .search-container {
+                margin-left: 0;
+                width: 100%;
+                justify-content: center;
+            }
+
+            .navigation .search-container input[type="text"],
+            .navigation .search-container button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+		
+		 /* Button section */
+        .buttons {
+            width: 30%;
+        }
+
+        .buttons table {
+            width: 100%;
+        }
+
+        .buttons button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .dashboard-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: 20px;
+        }
+		 /* Section styles (common for all sections) */
+
+		.verification-section
+		{
+            width: 65%;
+            display: none; /* Hidden by default */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+		.verification-section table {
+			border-collapse: collapse; /* Ensures borders don't double up */
+			width: 100%; /* Optional: Sets the table to span the container */
+		}
+
+		.verification-section table td {
+    border: 1px solid black; /* Adds a border to each cell */
+    padding: 8px; /* Optional: Adds spacing inside the cells */
+    text-align: center; /* Optional: Centers the text */
+	}
+
+		.verification-section table th {
+    border: 1px solid black; /* Adds borders to header cells if needed */
+    padding: 8px;
+    text-align: center;
+	}
+	
